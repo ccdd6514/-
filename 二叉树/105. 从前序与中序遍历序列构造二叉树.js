@@ -14,7 +14,7 @@
  * @param {number[]} inorder
  * @return {TreeNode}
  */
-//重点是找出前序遍历和中序遍历的左右子树，进行递归即可
+//重点是找出前序遍历和中序遍历的左右子树，进行递归即可111
 var buildTree = function (preorder, inorder) {
   // 存储 inorder 中值到索引的映射,提高查找中序遍历的根节点效率
   let valToIndex = new Map();
