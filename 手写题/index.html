@@ -1,0 +1,75 @@
+<style>
+    div {
+        width: 200px;
+        height: 200px;
+        background-color: #CCCCCC;
+        line-height: 200px;
+        text-align: center;
+        font-size: 30px;
+    }
+</style>
+
+<body>
+    <script type="text/javascript">
+        function debounce(fn, wait) {
+            let timer = null;
+
+            return function () {
+                let context = this
+                let args = arguments
+                // 如果此时存在定时器的话，则取消之前的定时器重新记时
+                if (timer) {
+                    clearTimeout(timer)
+                    timer = null
+                }
+                // 设置定时器，使事件间隔指定事件后执行
+                timer = setTimeout(() => {
+                    fn.apply(context, args)
+                }, wait)
+            }
+        }
+
+        // 示例用法
+        const handleResize = (param1, param2) => {
+            console.log('窗口大小已改变', param1, param2);
+        };
+
+        // 使用 debounce 包装 handleResize，并传递参数
+        const debouncedHandleResize = throttle1(handleResize, 3000);
+
+        window.addEventListener('resize', () => {
+            debouncedHandleResize('参数1', '参数2');
+        });
+
+        ///定时器
+        function throttle1(fn, wait) {
+            let timer = null;
+
+            return function () {
+                let context = this;
+                let args = arguments;
+                if (!timer) {
+                    timer = setTimeout(() => {
+                        timer = null;
+                        fn.apply(context, args);
+                    }, wait);
+                }
+            };
+        }
+
+        function throttle(fn, wait) {
+            let preTime = Date.now();
+
+            return function () {
+                let context = this;
+                let args = arguments;
+
+                let nowTime = Date.now();
+
+                if (nowTime - preTime > wait) {
+                    fn.apply(context, args);
+                    preTime = nowTime;
+                }
+            };
+        }
+    </script>
